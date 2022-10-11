@@ -1,0 +1,7 @@
+__pycache__
+.devcontainer
+Dockerfile
+.gitignore
+.git
+.dockerignore
+images

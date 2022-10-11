@@ -1,0 +1,7 @@
+/.config.ini
+/__pycache__
+/__pycache__/*
+/*.db
+/reports
+/regvuln.log
+/bitbucket-pipelines.yml

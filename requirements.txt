@@ -1,0 +1,6 @@
+art==5.7
+coloredlogs==15.0.1
+docker_py==1.10.6
+requests==2.28.1
+sheet2dict==0.1.4.2
+urllib3==1.26.11
