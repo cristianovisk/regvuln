@@ -1,0 +1,142 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "serialNumber": "urn:uuid:bc6ec6ad-74bb-4248-ae39-aee5c2029c9d",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2022-10-11T18:22:46+00:00",
+    "tools": [
+      {
+        "vendor": "aquasecurity",
+        "name": "trivy",
+        "version": "0.31.2"
+      }
+    ],
+    "component": {
+      "bom-ref": "917ed587-bc43-4553-ba51-fe20e2aa9b83",
+      "type": "application",
+      "name": ".",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:SchemaVersion",
+          "value": "2"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:pypi/art@5.7",
+      "type": "library",
+      "name": "art",
+      "version": "5.7",
+      "purl": "pkg:pypi/art@5.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/coloredlogs@15.0.1",
+      "type": "library",
+      "name": "coloredlogs",
+      "version": "15.0.1",
+      "purl": "pkg:pypi/coloredlogs@15.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/docker-py@1.10.6",
+      "type": "library",
+      "name": "docker_py",
+      "version": "1.10.6",
+      "purl": "pkg:pypi/docker-py@1.10.6",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/requests@2.28.1",
+      "type": "library",
+      "name": "requests",
+      "version": "2.28.1",
+      "purl": "pkg:pypi/requests@2.28.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/sheet2dict@0.1.4.2",
+      "type": "library",
+      "name": "sheet2dict",
+      "version": "0.1.4.2",
+      "purl": "pkg:pypi/sheet2dict@0.1.4.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/urllib3@1.26.11",
+      "type": "library",
+      "name": "urllib3",
+      "version": "1.26.11",
+      "purl": "pkg:pypi/urllib3@1.26.11",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "119dee42-3940-46f2-bbf7-9c5a04891db8",
+      "type": "application",
+      "name": "requirements.txt",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "pip"
+        },
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "119dee42-3940-46f2-bbf7-9c5a04891db8",
+      "dependsOn": [
+        "pkg:pypi/art@5.7",
+        "pkg:pypi/coloredlogs@15.0.1",
+        "pkg:pypi/docker-py@1.10.6",
+        "pkg:pypi/requests@2.28.1",
+        "pkg:pypi/sheet2dict@0.1.4.2",
+        "pkg:pypi/urllib3@1.26.11"
+      ]
+    },
+    {
+      "ref": "917ed587-bc43-4553-ba51-fe20e2aa9b83",
+      "dependsOn": [
+        "119dee42-3940-46f2-bbf7-9c5a04891db8"
+      ]
+    }
+  ],
+  "vulnerabilities": []
+}
