@@ -10,6 +10,7 @@ import shutil
 import time
 import hashlib
 import docker
+import pwd
 from operator import eq
 from datetime import datetime
 from time import sleep
@@ -27,7 +28,6 @@ from mgn_database import removeImage
 from mgn_database import checkIfUploadedScanDefectDojo
 from mgn_database import insertNewHashFileToCompare
 from mgn_database import checkHashFileToCompare
-from iris_request import iris_send_report
 from defectdojo_integration import populate_database_defectdojo
 from defectdojo_integration import sendReportDefectDojo
 
@@ -53,7 +53,7 @@ elif os.path.exists('.config.ini') is False:
     generate_config()
     exit()
 
-client = docker.Client(base_url='unix://var/run/docker.sock', version='auto') 
+user_current=str(pwd.getpwuid(os.getuid())[0])
 all_hashs = []
 limit = int(config['SCANTIME']['delay_in_seconds'])*int(config['SCANTIME']['timetoscan'])
 
@@ -180,8 +180,13 @@ def Difference(li1, li2):
     return list(set(li1) - set(li2)) + list(set(li2) - set(li1))
 
 def DockerPull(dns,image,tag):
-    logging.info('DOCKER - Baixando imagem OCI %s/%s:%s' %(dns,image,tag))
-    image = client.pull("%s/%s:%s" %(dns,image,tag))
+    if config['DOCKER']['cache_images'] == 'True' or config['DOCKER']['cache_images'] == 'true':
+        if user_current != 'root':
+            logging.warning('Não é possivel executar como %s, favor re-executar o script como ROOT, funcao de Cache habilitada.' %(user_current))
+            exit()
+        client = docker.Client(base_url='unix://var/run/docker.sock', version='auto')
+        logging.info('DOCKER - Baixando imagem OCI %s/%s:%s' %(dns,image,tag))
+        image = client.pull("%s/%s:%s" %(dns,image,tag))
 
 def TrivyScan(dns,image,tag,sha256,flag):
     try:
@@ -243,6 +248,10 @@ def helpScreen():
     print("--version \t\t- Mostrar versão do RegVuln")
     
 def readArgs():
+    try:
+        arg=sys.argv[1]
+    except:
+        helpScreen()
     for arg in sys.argv:
         if arg == '--help':
             helpScreen()
