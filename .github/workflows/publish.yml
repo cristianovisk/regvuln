@@ -10,7 +10,7 @@ uses: docker/login-action@v1
 with:
 registry: ghcr.io
 username: ${{ github.actor }}
-password: ${{ secrets.PUSH_DOCKER_IMAGE_REGVULN }}
+password: ${{ secrets.GITHUB_TOKEN }}
 - name: Build the regvuln Docker image
 run: |
        docker build . --tag ghcr.io/cristianovisk/regvuln:latest
