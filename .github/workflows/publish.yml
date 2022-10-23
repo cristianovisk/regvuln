@@ -1,7 +1,7 @@
 name: publish
 on: [push]
 jobs:
-  publish-hello-docker-image:
+  regvuln_docker:
     runs-on: ubuntu-latest
     steps:
      - uses: actions/checkout@v2
@@ -10,7 +10,7 @@ jobs:
        with:
          registry: ghcr.io
          username: ${{ github.actor }}
-         password: ${{ secrets.GITHUB_TOKEN }}
+         password: ${{ secrets.PUSH_DOCKER_IMAGE_REGVULN }}
      - name: Build the regvuln Docker image
        run: |
          docker build . --tag ghcr.io/cristianovisk/regvuln:latest
