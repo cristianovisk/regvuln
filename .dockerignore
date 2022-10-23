@@ -2,6 +2,7 @@ __pycache__
 .devcontainer
 Dockerfile
 .gitignore
+.config.ini
 .git
 .dockerignore
 images

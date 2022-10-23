@@ -6,6 +6,7 @@ import os
 import os.path
 import time
 import urllib3
+import environment
 from error import handlingError
 import coloredlogs, logging
 from mgn_database import insertProdType
@@ -29,13 +30,13 @@ def uploadToDefectDojo(filename, eng_name, scan_type, sha256, is_new_import, IDE
     multipart_form_data = {
         'file': (filename, open(filename, 'rb')),
         'scan_type': (None, scan_type),
-        'product_name': (None, config['DEFECT_DOJO']['product_name']),
+        'product_name': (None, environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']),
         'engagement_name': (None, eng_name),
         'tags': (None, sha256),
         'endpoint_to_add': (None, IDEndpoint),
-        'environment': (None, config['DEFECT_DOJO']['environment']),
+        'environment': (None, environment.var_env_global['RG_DEFECTDOJO_ENV']),
         # optional, used for `import-scan`
-        'product_type_name': (None, config['DEFECT_DOJO']['product_type']),
+        'product_type_name': (None, environment.var_env_global['RG_DEFECTDOJO_PRODUCT_TYPE']),
 
         # optional, used for `reimport-scan`
         'test_title': (None, eng_name),
@@ -46,7 +47,7 @@ def uploadToDefectDojo(filename, eng_name, scan_type, sha256, is_new_import, IDE
         uri = '/api/v2/import-scan/'
     elif is_new_import == False:
         uri = '/api/v2/reimport-scan/'
-    defect_dojo_domain = config['DEFECT_DOJO']['url']
+    defect_dojo_domain = environment.var_env_global['RG_DEFECTDOJO_URL']
     if uri == '/api/v2/import-scan/':
         logging.info("DEFECT_DOJO - Importando relatorio %s" %(filename))
     if uri == '/api/v2/reimport-scan/':
@@ -55,7 +56,7 @@ def uploadToDefectDojo(filename, eng_name, scan_type, sha256, is_new_import, IDE
         defect_dojo_domain + uri,
         files=multipart_form_data,
         headers={
-            'Authorization': 'Token %s' %config['DEFECT_DOJO']['api_key'],
+            'Authorization': 'Token %s' %environment.var_env_global['RG_DEFECTDOJO_API_KEY'],
         }
     )
     
@@ -66,18 +67,18 @@ def request_api(uri, method, body, content_type=None):
     config.sections()
     config.read('.config.ini')
     if method == 'GET':
-        url = '%s/api/v2/%s' %(config['DEFECT_DOJO']['url'],uri)
+        url = '%s/api/v2/%s' %(environment.var_env_global['RG_DEFECTDOJO_URL'],uri)
         headers = {'content-type': 'application/json',
-                'Authorization': 'Token %s' %(config['DEFECT_DOJO']['api_key'])}
+                'Authorization': 'Token %s' %(environment.var_env_global['RG_DEFECTDOJO_API_KEY'])}
         r = requests.get(url, headers=headers, verify=True) # set verify to False if ssl cert is self-signed
         # Debug Only
         handlingError(r.content, r.status_code)
         result = r.json()
         return result
     elif method == 'POST':
-        url = '%s/api/v2/%s' %(config['DEFECT_DOJO']['url'],uri)
+        url = '%s/api/v2/%s' %(environment.var_env_global['RG_DEFECTDOJO_URL'],uri)
         headers = {'content-type': 'application/json',
-                'Authorization': 'Token %s' %(config['DEFECT_DOJO']['api_key'])}
+                'Authorization': 'Token %s' %(environment.var_env_global['RG_DEFECTDOJO_API_KEY'])}
         r = requests.post(url, headers=headers, data = body, verify=True) # set verify to False if ssl cert is self-signed
         handlingError(r.content, r.status_code)
         result = r.json()
@@ -137,10 +138,10 @@ def gen_new_engagement(sha256, name, reg_name, idprod):
 
 def gen_new_endpoint(idprod):
     data_end = {}
-    data_end['host'] = config['REGISTRY']['dns'].split(":", 1)[0]
-    data_end['protocol'] = config['REGISTRY']['url'].split(":", 1)[0]
+    data_end['host'] = environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[0]
+    data_end['protocol'] = environment.var_env_global['RG_REGISTRY_URL'].split(":", 1)[0]
     try:
-        data_end['port'] = config['REGISTRY']['dns'].split(":", 1)[1]
+        data_end['port'] = environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[1]
     except:
         if data_end['protocol'] == 'http':
             data_end['port'] = 80
@@ -158,17 +159,17 @@ def gen_new_endpoint(idprod):
         insertNewEndpoint(check_exist['id'],check_exist['product'],check_exist['host'],check_exist['protocol'],check_exist['port'])
 
 def sendReportDefectDojo(image, tag, name, reg_name, uploadFlagDojo, json_file, sha256, flag):
-    if config['DEFECT_DOJO']['enabled'] == 'true' or config['DEFECT_DOJO']['enabled'] == 'True':
+    if environment.var_env_global['RG_DEFECTDOJO_ENABLED'] == 'true' or environment.var_env_global['RG_DEFECTDOJO_ENABLED'] == 'True':
         if flag == 1:
             populate_database_defectdojo()
-            gen_product_type(config['DEFECT_DOJO']['product_type'], "Analisado automaticamente via API")
-            gen_new_product(config['DEFECT_DOJO']['product_name'], "Analisado automaticamente via API", checkIDProductType(config['DEFECT_DOJO']['product_type']))
-            gen_new_endpoint(checkIDProduct(config['DEFECT_DOJO']['product_name']))
-        gen_new_engagement(sha256.split(":", 1)[1], "%s:%s" %(image,tag), reg_name, checkIDProduct(config['DEFECT_DOJO']['product_name']))
-        IDEndpoint = checkIDEndpoint(config['REGISTRY']['dns'].split(":", 1)[0],config['REGISTRY']['url'].split(":", 1)[0],int(config['REGISTRY']['dns'].split(":", 1)[1]),checkIDProduct(config['DEFECT_DOJO']['product_name']))
+            gen_product_type(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_TYPE'], "Analisado automaticamente via API")
+            gen_new_product(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME'], "Analisado automaticamente via API", checkIDProductType(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_TYPE']))
+            gen_new_endpoint(checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
+        gen_new_engagement(sha256.split(":", 1)[1], "%s:%s" %(image,tag), reg_name, checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
+        IDEndpoint = checkIDEndpoint(environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[0],environment.var_env_global['RG_REGISTRY_URL'].split(":", 1)[0],int(environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[1]),checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
         uploadToDefectDojo(json_file, "%s:%s" %(image,tag), 'Trivy Scan', sha256.split(":", 1)[1],uploadFlagDojo, IDEndpoint)
         updateTagIfUploadedScanDefectDojo(image,tag,sha256)
-    elif config['DEFECT_DOJO']['enabled'] == 'false' or config['DEFECT_DOJO']['enabled'] == 'False':
+    elif environment.var_env_global['RG_DEFECTDOJO_ENABLED'] == 'false' or environment.var_env_global['RG_DEFECTDOJO_ENABLED'] == 'False':
         logging.debug('Envio DefectDojo desabilitado')
         return False
 
