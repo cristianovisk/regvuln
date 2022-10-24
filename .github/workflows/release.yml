@@ -42,8 +42,8 @@ jobs:
         run: $(git tag | tail -n 1)
 
       - name: GET SHA
-        run: echo "SHA=$(git rev-parse --short HEAD)" >> $env:GITHUB_ENV
-        run: echo "TAG=$(git tag | tail -n 1)" >> $env:GITHUB_ENV
+        run: echo "SHA=$(git rev-parse --short HEAD)" >> $env:SHA
+        run: echo "TAG=$(git tag | tail -n 1)" >> $env:TAG
       
       - name: Build and push Docker images
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
