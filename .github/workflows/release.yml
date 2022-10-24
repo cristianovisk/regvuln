@@ -5,8 +5,12 @@ on:
     tags:
       - "v*"
 
+env:
+  SH8: $(echo ${GITHUB_SHA} | cut -c1-8)
+  TAG: $(git tag | tail -n 1)
+
 jobs:
-  push_to_registries:
+  release:
     name: Push Docker image to multiple registries
     runs-on: ubuntu-latest
     permissions:
@@ -36,12 +40,14 @@ jobs:
           images: |
             cristianovisk/regvuln
             ghcr.io/${{ github.repository }}
+      
+      - run: |
+          echo "SH8=$(echo ${{ env.SH8 }})" >> $GITHUB_ENV
+        name: Get short commit
 
-      - uses: tenhaus/get-release-or-tag@v2
-        id: sha
-
-      - uses: tenhaus/get-release-or-tag@v2
-        id: tag
+      - run: |
+          echo "TAG=$(echo ${{ env.TAG }})" >> $GITHUB_ENV
+        name: Get last TAG commit
 
       - name: Build and push Docker images
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -51,8 +57,8 @@ jobs:
           push: true
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.tag }}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ env.SH8 }}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ env.TAG }}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.tag }}}
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ env.TAG }}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ env.SH8 }}
