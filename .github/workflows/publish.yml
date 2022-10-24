@@ -47,3 +47,5 @@ jobs:
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{github.run_number}}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{github.run_number}}
