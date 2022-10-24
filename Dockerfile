@@ -12,6 +12,7 @@ COPY . /opt/regvuln
 RUN python3 -m compileall -b && rm -f *.py
 
 FROM alpine:3.16.2 as final
+LABEL org.opencontainers.image.source="https://github.com/cristianovisk/regvuln"
 RUN apk update && \
     apk upgrade --no-cache && \
     apk add python3 tzdata --no-cache && \
