@@ -1,8 +1,8 @@
 FROM alpine:3.16.2 as build
 WORKDIR /opt/py3venv
 RUN apk update && \
-    apk upgrade && \
-    apk add python3 py3-pip
+    apk upgrade --no-cache && \
+    apk add python3 py3-pip --no-cache
 RUN python3 -m venv /opt/py3venv
 ENV PATH="/opt/py3venv/bin:$PATH"
 COPY requirements.txt .
@@ -13,8 +13,9 @@ RUN python3 -m compileall -b && rm -f *.py
 
 FROM alpine:3.16.2 as final
 RUN apk update && \
-    apk upgrade && \
-    apk add python3 tzdata && \
+    apk upgrade --no-cache && \
+    apk add python3 tzdata --no-cache && \
+    rm -rf /var/cache/apk/* && \
     cp /usr/share/zoneinfo/America/Fortaleza /etc/localtime
 ENV RG_DEBUG_FILE="/dev/stdout"
 COPY --from=build /opt/py3venv /opt/py3venv
