@@ -49,6 +49,6 @@ jobs:
           push: true
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.sha.outputs.sha }}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.sha.outputs.sha }}
