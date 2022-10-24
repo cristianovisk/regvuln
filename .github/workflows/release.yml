@@ -36,9 +36,6 @@ jobs:
           images: |
             cristianovisk/regvuln
             ghcr.io/${{ github.repository }}
-      
-      - name: GET SHA
-        run: echo "SHA=$("${{ github.sha }}".SubString(0, 7))" >> $env:GITHUB_ENV
 
       - name: GET TAG
         run: echo "TAG=$(git tag | tail -n 1)" >> $env:GITHUB_ENV
@@ -51,8 +48,8 @@ jobs:
           push: true
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SHA}}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${GITHUB_SHA:0:7}
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.TAG}}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.TAG}}
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SHA}}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${GITHUB_SHA:0:7}
