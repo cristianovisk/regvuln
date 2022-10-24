@@ -39,7 +39,7 @@ jobs:
             ghcr.io/${{ github.repository }}
         
       - name: Get SHA
-        run: echo "SH8=$("${{ github.sha }}".SubString(0, 7))" >> $env:GITHUB_ENV
+        run: echo "SHA=$(git rev-parse --short HEAD)" >> $env:GITHUB_ENV
 
       - name: Build and push Docker images
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -49,6 +49,6 @@ jobs:
           push: true
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SH8}}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SHA}}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SH8}}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SHA}}
