@@ -30,6 +30,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PUSH_DOCKER_IMAGE_REGVULN }}
       
+      - uses: tenhaus/get-release-or-tag@v2
+        id: sha
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
@@ -46,6 +49,6 @@ jobs:
           push: true
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${GITHUB_SHA:0:7}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${GITHUB_SHA:0:7}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}

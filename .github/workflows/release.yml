@@ -37,9 +37,12 @@ jobs:
             cristianovisk/regvuln
             ghcr.io/${{ github.repository }}
 
-      - name: GET TAG
-        run: echo "TAG=$(git tag | tail -n 1)" >> $env:GITHUB_ENV
-      
+      - uses: tenhaus/get-release-or-tag@v2
+        id: sha
+
+      - uses: tenhaus/get-release-or-tag@v2
+        id: tag
+
       - name: Build and push Docker images
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -48,8 +51,8 @@ jobs:
           push: true
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${GITHUB_SHA:0:7}
-            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.TAG}}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.tag }}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.TAG}}
-            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${GITHUB_SHA:0:7}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.tag }}}
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{ steps.tag.outputs.sha }}
