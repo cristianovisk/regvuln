@@ -1,13 +1,9 @@
-name: Publish Docker image
+name: Docker Release
 
 on:
   push:
     tags:
       - "v*"
-
-env:
-  SH8: $(echo ${GITHUB_SHA} | cut -c1-8)
-  TAG: $(git tag | tail -n 1)
 
 jobs:
   push_to_registries:
@@ -40,6 +36,14 @@ jobs:
           images: |
             cristianovisk/regvuln
             ghcr.io/${{ github.repository }}
+      
+      - name: GET SHA
+        run: echo "SH8=$("${{ github.sha }}".SubString(0, 7))" >> $env:GITHUB_ENV
+        run: $(git tag | tail -n 1)
+
+      - name: GET SHA
+        run: echo "SH8=$("${{ github.sha }}".SubString(0, 7))" >> $env:GITHUB_ENV
+        run: echo "TAG=$(git tag | tail -n 1)" >> $env:GITHUB_ENV
       
       - name: Build and push Docker images
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
