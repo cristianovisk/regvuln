@@ -1,13 +1,13 @@
-name: Docker Version
+name: Publish Docker image
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - "v*"
 
 env:
   SH8: $(echo ${GITHUB_SHA} | cut -c1-8)
+  TAG: $(git tag | tail -n 1)
 
 jobs:
   push_to_registries:
@@ -50,5 +50,7 @@ jobs:
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
             ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SH8}}
+            ${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.TAG}}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:latest
+            ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.TAG}}
             ghcr.io/${{secrets.DOCKERHUB_USERNAME}}/regvuln:${{env.SH8}}

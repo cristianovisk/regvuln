@@ -6,3 +6,6 @@ Dockerfile
 .git
 .dockerignore
 images
+bom.json
+regvuln.log
+.github
