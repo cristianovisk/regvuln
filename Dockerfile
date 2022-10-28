@@ -6,7 +6,7 @@ RUN apk update && \
 RUN python3 -m venv /opt/py3venv
 ENV PATH="/opt/py3venv/bin:$PATH"
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && rm -f Pipfile Pipfile.lock requirements.txt
 WORKDIR /opt/regvuln
 COPY . /opt/regvuln
 RUN python3 -m compileall -b && rm -f *.py

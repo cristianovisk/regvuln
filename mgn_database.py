@@ -1,9 +1,10 @@
-import sqlite3
-from datetime import datetime
 import time
+import sqlite3
+import environment
+from datetime import datetime
 
 def createDB():
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     
     # definindo um cursor
     cursor = conn.cursor()
@@ -64,7 +65,7 @@ def createDB():
     conn.close()
 
 def insertNewHashFileToCompare(filename, hashfile):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO hash_json_files (filename, hash) VALUES ('%s', '%s')""" %(filename,hashfile))
@@ -74,7 +75,7 @@ def insertNewHashFileToCompare(filename, hashfile):
 
 def checkHashFileToCompare(filename,hashfile):
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT hash FROM hash_json_files WHERE filename = '%s' AND hash = '%s'""" %(filename,hashfile))
@@ -88,7 +89,7 @@ def checkHashFileToCompare(filename,hashfile):
     return result
 
 def insertProdType(idprod, name):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO defect_prod_type (id, name) VALUES (%s, '%s')""" %(idprod,name))
@@ -97,7 +98,7 @@ def insertProdType(idprod, name):
     conn.close()
 
 def insertNewProd(idprod, name):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO defect_product (id, name) VALUES (%s, '%s')""" %(idprod,name))
@@ -106,7 +107,7 @@ def insertNewProd(idprod, name):
     conn.close()
 
 def insertNewEngagement(idprod, name):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO defect_engagement (id, name) VALUES (%s, '%s')""" %(idprod,name))
@@ -115,7 +116,7 @@ def insertNewEngagement(idprod, name):
     conn.close()
 
 def insertNewEndpoint(idend, prod_id, host, protocol, port):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO defect_endpoint (id, name, protocol, port, prod_id) VALUES (%s, '%s', '%s', %i, %i)""" %(idend,host,protocol,port,prod_id))
@@ -125,7 +126,7 @@ def insertNewEndpoint(idend, prod_id, host, protocol, port):
 
 def checkIDProductType(name):
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT id FROM defect_prod_type WHERE name = '%s'""" %(name))
@@ -137,7 +138,7 @@ def checkIDProductType(name):
 
 def checkIDProduct(name):
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT id FROM defect_product WHERE name = '%s'""" %(name))
@@ -149,7 +150,7 @@ def checkIDProduct(name):
 
 def checkIfUploadedScanDefectDojo(name, tag, sha256):
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT defect_uploaded FROM images WHERE name = '%s' AND tag = '%s' AND sha256 = '%s'""" %(name, tag, sha256))
@@ -160,7 +161,7 @@ def checkIfUploadedScanDefectDojo(name, tag, sha256):
     return result
 
 def updateTagIfUploadedScanDefectDojo(name,tag,sha256):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""UPDATE images SET defect_uploaded = '%s' WHERE name = '%s' AND tag = '%s' AND sha256 = '%s'""" %("False",name,tag,sha256))
@@ -173,7 +174,7 @@ def updateTagIfUploadedScanDefectDojo(name,tag,sha256):
 
 def checkIDEngagement(name):
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT id FROM defect_engagement WHERE name = '%s'""" %(name))
@@ -186,7 +187,7 @@ def checkIDEngagement(name):
 def checkIDEndpoint(host,protocol,port,prod_id):
     time.sleep(2)
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT id FROM defect_endpoint WHERE name = '%s' AND protocol = '%s' AND port = %i AND prod_id = %i""" %(host,protocol,port,prod_id))
@@ -198,7 +199,7 @@ def checkIDEndpoint(host,protocol,port,prod_id):
 
 def returnAllHashs():
     result = []
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT DISTINCT REPLACE(sha256,"sha256:","") as HASH FROM images""")
@@ -210,7 +211,7 @@ def returnAllHashs():
     return result
 
 def checkIfImageExist(name,tag,sha256):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT name, tag, sha256 FROM images WHERE name = '%s' AND tag = '%s' AND sha256 = '%s'""" %(name,tag,sha256))
@@ -226,7 +227,7 @@ def checkIfImageExist(name,tag,sha256):
         return False
 
 def checkIfImageNeedScan(name,tag,limit,sha256):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""SELECT timestamp FROM images WHERE name = '%s' AND tag = '%s' AND sha256 = '%s'""" %(name,tag,sha256))
@@ -241,7 +242,7 @@ def checkIfImageNeedScan(name,tag,limit,sha256):
     conn.close()
 
 def updateTimestampImage(name,tag,sha256):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""UPDATE images SET timestamp = '%i' WHERE name = '%s' AND tag = '%s' AND sha256 = '%s'""" %(int(datetime.timestamp(datetime.now())),name,tag,sha256))
@@ -252,7 +253,7 @@ def updateTimestampImage(name,tag,sha256):
     conn.close()
 
 def updateJsonScan(name,tag,sha256,json_bin):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     insertBlob = """UPDATE images SET json = ? WHERE name = ? AND tag = ? AND sha256 = ?"""
@@ -266,7 +267,7 @@ def updateJsonScan(name,tag,sha256,json_bin):
     conn.close()
 
 def insertImage(imgname, imgtag, size, timestamp, hash):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO images (name, tag, size, timestamp, sha256, defect_uploaded) VALUES ('%s', '%s', '%i', '%i', '%s', 'True')""" %(imgname, imgtag, size, timestamp, hash))
@@ -275,7 +276,7 @@ def insertImage(imgname, imgtag, size, timestamp, hash):
     conn.close()
 
 def removeImage(hash):
-    conn = sqlite3.connect('registry.db')
+    conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
     cursor.execute("""DELETE FROM images WHERE sha256 = '%s'""" %(hash))
