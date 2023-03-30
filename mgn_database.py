@@ -5,7 +5,10 @@ import os
 from datetime import datetime
 
 def createDB():
-    os.mkdir(environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
+    try:
+        os.mkdir(environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
+    except:
+        pass
     conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     
     # definindo um cursor
