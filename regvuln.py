@@ -68,12 +68,19 @@ def main():
             flag += 1
             digest = requestAPI('/v2/%s/manifests/%s' %(image,tag))
             try:
-                sha256 = digest['config']['digest']
+                sha256 = digest.get('config').get('digest')
             except:
-                logging.critical("REGVULN - Digest HASH da imagem %s:%s nao encontrada. Favor realizar upload novamente da imagem no Registry, para que o erro seja corrigido." %(image,tag))
+                if sha256 == None:
+                    sha256 = digest.get('manifests')[0].get('digest')
+            try:
+                size = digest.get('config').get('size')
+            except:            
+                if size == None:
+                    size = digest.get('manifests')[0].get('size')
+            # except:
+            #     logging.critical("REGVULN - Digest HASH da imagem %s:%s nao encontrada. Favor realizar upload novamente da imagem no Registry, para que o erro seja corrigido." %(image,tag))
 
             all_hashs.append(sha256)
-            size = digest['config']['size']
             timestamp_image = int(datetime.timestamp(datetime.now()))
             if checkIfImageExist(image,tag,sha256) == False:
                 insertImage(image,tag,size,timestamp_image,sha256)
@@ -155,8 +162,19 @@ def checkDocker():
         exit()
 
 def requestAPI(path):
-    r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), headers={'accept': 'application/vnd.docker.distribution.manifest.v2+json'})
+    headers = {
+                'accept': 'application/vnd.docker.distribution.manifest.v2+json'
+               }
+    r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), headers=headers)
     handlingError(r.content, r.status_code)
+    if r.status_code == 404:
+        headers = {
+                'accept': 'application/vnd.oci.image.index.v1+json'
+               }
+        r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), headers=headers)
+        handlingError(r.content, r.status_code)
+        print(json.dumps(r.json(), indent=4))
+        
     result = r.json()
     return result
 
