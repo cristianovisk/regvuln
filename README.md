@@ -6,6 +6,7 @@
 ![Pipeline Status](https://github.com/cristianovisk/regvuln/actions/workflows/release.yml/badge.svg)
 [![GitHub release](https://img.shields.io/github/release/cristianovisk/regvuln)](https://github.com/cristianovisk/regvuln/releases/latest)
 ![GitHub all releases](https://img.shields.io/github/downloads/cristianovisk/regvuln/total)
+![Vulnerabilities Libs](https://api.dptrack.duckdns.org/api/v1/badge/vulns/project/5ae4f81f-f2c0-48be-a2b8-645de92782f2)
 # RegVuln - Scanner Registry AppSec
 
 📜 Este scanner analisa um servidor registry com imagens de containers Docker/OCI, e analisa TAG a TAG as vulnerabilidades existentes nelas usando Trivy da AquaSec.
