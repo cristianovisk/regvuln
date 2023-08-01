@@ -1,142 +1,403 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.4",
-  "serialNumber": "urn:uuid:bc6ec6ad-74bb-4248-ae39-aee5c2029c9d",
+  "serialNumber": "urn:uuid:79507a34-5643-4b41-b023-51e6b8d218a8",
   "version": 1,
   "metadata": {
-    "timestamp": "2022-10-11T18:22:46+00:00",
+    "timestamp": "2023-08-01T17:35:07.329Z",
     "tools": [
       {
-        "vendor": "aquasecurity",
-        "name": "trivy",
-        "version": "0.31.2"
+        "vendor": "cyclonedx",
+        "name": "cdxgen",
+        "version": "9.3.1"
+      }
+    ],
+    "authors": [
+      {
+        "name": "Prabhu Subramanian",
+        "email": "prabhu@appthreat.com"
       }
     ],
     "component": {
-      "bom-ref": "917ed587-bc43-4553-ba51-fe20e2aa9b83",
+      "group": "",
+      "name": "app",
+      "version": "latest",
       "type": "application",
-      "name": ".",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:SchemaVersion",
-          "value": "2"
-        }
-      ]
+      "bom-ref": "pkg:pypi/app@latest",
+      "purl": "pkg:pypi/app@latest",
+      "components": []
     }
   },
   "components": [
     {
-      "bom-ref": "pkg:pypi/art@5.7",
-      "type": "library",
-      "name": "art",
-      "version": "5.7",
-      "purl": "pkg:pypi/art@5.7",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "pkg:pypi/coloredlogs@15.0.1",
-      "type": "library",
-      "name": "coloredlogs",
-      "version": "15.0.1",
-      "purl": "pkg:pypi/coloredlogs@15.0.1",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "pkg:pypi/docker-py@1.10.6",
-      "type": "library",
-      "name": "docker_py",
-      "version": "1.10.6",
-      "purl": "pkg:pypi/docker-py@1.10.6",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "pkg:pypi/requests@2.28.1",
-      "type": "library",
-      "name": "requests",
-      "version": "2.28.1",
-      "purl": "pkg:pypi/requests@2.28.1",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "pkg:pypi/sheet2dict@0.1.4.2",
-      "type": "library",
+      "author": "",
+      "publisher": "",
+      "group": "",
       "name": "sheet2dict",
       "version": "0.1.4.2",
+      "description": "",
+      "licenses": [],
       "purl": "pkg:pypi/sheet2dict@0.1.4.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/sheet2dict@0.1.4.2"
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "openpyxl",
+      "version": "3.1.2",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/openpyxl@3.1.2",
+      "type": "library",
+      "bom-ref": "pkg:pypi/openpyxl@3.1.2",
       "properties": [
         {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
         }
       ]
     },
     {
-      "bom-ref": "pkg:pypi/urllib3@1.26.11",
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "et-xmlfile",
+      "version": "1.1.0",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/et-xmlfile@1.1.0",
       "type": "library",
+      "bom-ref": "pkg:pypi/et-xmlfile@1.1.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "setuptools",
+      "version": "65.5.1",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/setuptools@65.5.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/setuptools@65.5.1"
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "pip",
+      "version": "22.3.1",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/pip@22.3.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/pip@22.3.1"
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "docker-py",
+      "version": "1.10.6",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/docker-py@1.10.6",
+      "type": "library",
+      "bom-ref": "pkg:pypi/docker-py@1.10.6"
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "websocket-client",
+      "version": "1.6.1",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/websocket-client@1.6.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/websocket-client@1.6.1",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "six",
+      "version": "1.16.0",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/six@1.16.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/six@1.16.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "requests",
+      "version": "2.31.0",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/requests@2.31.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/requests@2.31.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "charset-normalizer",
+      "version": "3.2.0",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/charset-normalizer@3.2.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/charset-normalizer@3.2.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
       "name": "urllib3",
       "version": "1.26.11",
+      "description": "",
+      "licenses": [],
       "purl": "pkg:pypi/urllib3@1.26.11",
+      "type": "library",
+      "bom-ref": "pkg:pypi/urllib3@1.26.11",
       "properties": [
         {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
         }
       ]
     },
     {
-      "bom-ref": "119dee42-3940-46f2-bbf7-9c5a04891db8",
-      "type": "application",
-      "name": "requirements.txt",
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "idna",
+      "version": "3.4",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/idna@3.4",
+      "type": "library",
+      "bom-ref": "pkg:pypi/idna@3.4",
       "properties": [
         {
-          "name": "aquasecurity:trivy:Type",
-          "value": "pip"
-        },
-        {
-          "name": "aquasecurity:trivy:Class",
-          "value": "lang-pkgs"
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
         }
       ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "certifi",
+      "version": "2023.7.22",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/certifi@2023.7.22",
+      "type": "library",
+      "bom-ref": "pkg:pypi/certifi@2023.7.22",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "docker-pycreds",
+      "version": "0.4.0",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/docker-pycreds@0.4.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/docker-pycreds@0.4.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "coloredlogs",
+      "version": "15.0.1",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/coloredlogs@15.0.1",
+      "type": "library",
+      "bom-ref": "pkg:pypi/coloredlogs@15.0.1"
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "humanfriendly",
+      "version": "10.0",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/humanfriendly@10.0",
+      "type": "library",
+      "bom-ref": "pkg:pypi/humanfriendly@10.0",
+      "properties": [
+        {
+          "name": "SrcFile",
+          "value": "/app/requirements.txt"
+        }
+      ]
+    },
+    {
+      "author": "",
+      "publisher": "",
+      "group": "",
+      "name": "art",
+      "version": "5.7",
+      "description": "",
+      "licenses": [],
+      "purl": "pkg:pypi/art@5.7",
+      "type": "library",
+      "bom-ref": "pkg:pypi/art@5.7"
     }
   ],
+  "services": [],
   "dependencies": [
     {
-      "ref": "119dee42-3940-46f2-bbf7-9c5a04891db8",
+      "ref": "pkg:pypi/app@latest",
       "dependsOn": [
-        "pkg:pypi/art@5.7",
-        "pkg:pypi/coloredlogs@15.0.1",
-        "pkg:pypi/docker-py@1.10.6",
-        "pkg:pypi/requests@2.28.1",
         "pkg:pypi/sheet2dict@0.1.4.2",
+        "pkg:pypi/setuptools@65.5.1",
+        "pkg:pypi/pip@22.3.1",
+        "pkg:pypi/docker-py@1.10.6",
+        "pkg:pypi/coloredlogs@15.0.1",
+        "pkg:pypi/art@5.7"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/openpyxl@3.1.2",
+      "dependsOn": [
+        "pkg:pypi/et-xmlfile@1.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/et-xmlfile@1.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/sheet2dict@0.1.4.2",
+      "dependsOn": [
+        "pkg:pypi/openpyxl@3.1.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/setuptools@65.5.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/pip@22.3.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/websocket-client@1.6.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/six@1.16.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/requests@2.31.0",
+      "dependsOn": [
+        "pkg:pypi/certifi@2023.7.22",
+        "pkg:pypi/charset-normalizer@3.2.0",
+        "pkg:pypi/idna@3.4",
         "pkg:pypi/urllib3@1.26.11"
       ]
     },
     {
-      "ref": "917ed587-bc43-4553-ba51-fe20e2aa9b83",
+      "ref": "pkg:pypi/charset-normalizer@3.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/urllib3@1.26.11",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/idna@3.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/certifi@2023.7.22",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/docker-pycreds@0.4.0",
       "dependsOn": [
-        "119dee42-3940-46f2-bbf7-9c5a04891db8"
+        "pkg:pypi/six@1.16.0"
       ]
+    },
+    {
+      "ref": "pkg:pypi/docker-py@1.10.6",
+      "dependsOn": [
+        "pkg:pypi/docker-pycreds@0.4.0",
+        "pkg:pypi/requests@2.31.0",
+        "pkg:pypi/six@1.16.0",
+        "pkg:pypi/websocket-client@1.6.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/humanfriendly@10.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/coloredlogs@15.0.1",
+      "dependsOn": [
+        "pkg:pypi/humanfriendly@10.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/art@5.7",
+      "dependsOn": []
     }
-  ],
-  "vulnerabilities": []
+  ]
 }
