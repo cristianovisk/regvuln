@@ -165,13 +165,13 @@ def requestAPI(path):
     headers = {
                 'accept': 'application/vnd.docker.distribution.manifest.v2+json'
                }
-    r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), headers=headers)
+    r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), verify=False, headers=headers)
     handlingError(r.content, r.status_code)
     if r.status_code == 404:
         headers = {
                 'accept': 'application/vnd.oci.image.index.v1+json'
                }
-        r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), headers=headers)
+        r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],path), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), verify=False, headers=headers)
         handlingError(r.content, r.status_code)
         print(json.dumps(r.json(), indent=4))
         
@@ -179,7 +179,7 @@ def requestAPI(path):
     return result
 
 def checkCredRegistry():
-    r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],environment.var_env_global['RG_REGISTRY_CATALOG']), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), headers={'accept': 'application/vnd.docker.distribution.manifest.v2+json'})
+    r = requests.get(url = '%s%s' %(environment.var_env_global['RG_REGISTRY_URL'],environment.var_env_global['RG_REGISTRY_CATALOG']), auth=(environment.var_env_global['RG_REGISTRY_USER'], environment.var_env_global['RG_REGISTRY_PASSWORD']), verify=False, headers={'accept': 'application/vnd.docker.distribution.manifest.v2+json'})
     handlingError(r.content, r.status_code)
     status = int(r.status_code)
     if status == 401:
