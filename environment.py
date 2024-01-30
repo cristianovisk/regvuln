@@ -42,7 +42,7 @@ if os.path.exists('.config.ini') is False:
     env = {
         "RG_REGISTRY_DNS": "",
         "RG_REGISTRY_URL": "",
-        "RG_REGISTRY_PORT": 80,
+        "RG_REGISTRY_PORT": "80",
         "RG_REGISTRY_CATALOG": "/v2/_catalog",
         "RG_REGISTRY_USER": "user",
         "RG_REGISTRY_PASSWORD": "password",
