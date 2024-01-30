@@ -11,6 +11,7 @@ coloredlogs.install()
 list_env = [
     "RG_REGISTRY_DNS",
     "RG_REGISTRY_URL",
+    "RG_REGISTRY_PORT"
     "RG_REGISTRY_CATALOG",
     "RG_REGISTRY_USER",
     "RG_REGISTRY_PASSWORD",
@@ -41,6 +42,7 @@ if os.path.exists('.config.ini') is False:
     env = {
         "RG_REGISTRY_DNS": "",
         "RG_REGISTRY_URL": "",
+        "RG_REGISTRY_PORT": 80,
         "RG_REGISTRY_CATALOG": "/v2/_catalog",
         "RG_REGISTRY_USER": "user",
         "RG_REGISTRY_PASSWORD": "password",
@@ -87,6 +89,7 @@ elif os.path.exists('.config.ini') is True:
         env = {
             "RG_REGISTRY_DNS": config['REGISTRY']['dns'],
             "RG_REGISTRY_URL": config['REGISTRY']['url'],
+            "RG_REGISTRY_PORT": config['REGISTRY']['port'],
             "RG_REGISTRY_CATALOG": config['REGISTRY']['catalog'],
             "RG_REGISTRY_USER": config['REGISTRY']['user'],
             "RG_REGISTRY_PASSWORD": config['REGISTRY']['password'],

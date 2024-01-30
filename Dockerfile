@@ -6,7 +6,7 @@ RUN apk update && \
 RUN python3 -m venv /opt/py3venv
 ENV PATH="/opt/py3venv/bin:$PATH"
 COPY requirements.txt .
-RUN pip install -r requirements.txt && rm -f Pipfile Pipfile.lock requirements.txt
+RUN pip install --upgrade pip --no-cache-dir && pip install -r requirements.txt --no-cache-dir && rm -f Pipfile Pipfile.lock requirements.txt
 WORKDIR /opt/regvuln
 COPY . /opt/regvuln
 RUN python3 -m compileall -b && rm -f *.py
@@ -21,7 +21,7 @@ RUN apk update && \
 COPY --from=build /opt/py3venv /opt/py3venv
 COPY --from=build /opt/regvuln /opt/regvuln
 COPY --from=aquasec/trivy:latest /usr/local/bin/trivy /usr/local/bin/trivy
-# RUN trivy rootfs --exit-code 1 --no-progress --ignore-unfixed --skip-files "usr/local/bin/trivy" / && rm -rf ~/.cache/trivy
+RUN trivy rootfs --exit-code 1 --no-progress --ignore-unfixed --skip-files "usr/local/bin/trivy" / && rm -rf ~/.cache/trivy
 ENV PATH="/opt/py3venv/bin:$PATH"
 ENV TRIVY_NON_SSL=true
 ENV TRIVY_INSECURE=true

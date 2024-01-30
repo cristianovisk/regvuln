@@ -166,7 +166,10 @@ def sendReportDefectDojo(image, tag, name, reg_name, uploadFlagDojo, json_file, 
             gen_new_product(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME'], "Analisado automaticamente via API", checkIDProductType(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_TYPE']))
             gen_new_endpoint(checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
         gen_new_engagement(sha256.split(":", 1)[1], "%s:%s" %(image,tag), reg_name, checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
-        IDEndpoint = checkIDEndpoint(environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[0],environment.var_env_global['RG_REGISTRY_URL'].split(":", 1)[0],int(environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[1]),checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
+        IDEndpoint = checkIDEndpoint(environment.var_env_global['RG_REGISTRY_DNS'].split(":", 1)[0],
+                                     environment.var_env_global['RG_REGISTRY_URL'].split(":", 1)[0],
+                                     environment.var_env_global['RG_REGISTRY_PORT'],
+                                     checkIDProduct(environment.var_env_global['RG_DEFECTDOJO_PRODUCT_NAME']))
         uploadToDefectDojo(json_file, "%s:%s" %(image,tag), 'Trivy Scan', sha256.split(":", 1)[1],uploadFlagDojo, IDEndpoint)
         updateTagIfUploadedScanDefectDojo(image,tag,sha256)
     elif environment.var_env_global['RG_DEFECTDOJO_ENABLED'] == 'false' or environment.var_env_global['RG_DEFECTDOJO_ENABLED'] == 'False':
