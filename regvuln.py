@@ -217,7 +217,7 @@ def TrivyScan(dns,image,tag,sha256,flag):
     image_name = ("%s/%s:%s" %(dns,image,tag))
 
     logging.info("TRIVY - Analisando %s" %image_name)
-    os.system('trivy image -f json -o %s %s' %(json_file,image_name))
+    os.system('trivy image -f json -o %s %s > /dev/null 2>&1' %(json_file,image_name))
 
     logging.info("TRIVY - Gerando JSON: %s" %json_file)
     json_bin = convertToBinaryData(json_file)
