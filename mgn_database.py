@@ -195,7 +195,7 @@ def checkIDEndpoint(host,protocol,port,prod_id):
     conn = sqlite3.connect('%s/registry.db' %environment.var_env_global['RG_REPORT_OUTPUT_FOLDER'])
     # definindo um cursor
     cursor = conn.cursor()
-    cursor.execute("""SELECT id FROM defect_endpoint WHERE name = '%s' AND protocol = '%s' AND port = %i AND prod_id = %i""" %(host,protocol,port,prod_id))
+    cursor.execute("""SELECT id FROM defect_endpoint WHERE name = '%s' AND protocol = '%s' AND port = %i AND prod_id = %i""" %(host,protocol,int(port),int(prod_id)))
     query = cursor.fetchall()
     result = query[0][0]
     conn.commit()
