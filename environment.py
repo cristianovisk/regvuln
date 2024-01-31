@@ -11,7 +11,7 @@ coloredlogs.install()
 list_env = [
     "RG_REGISTRY_DNS",
     "RG_REGISTRY_URL",
-    "RG_REGISTRY_PORT"
+    "RG_REGISTRY_PORT",
     "RG_REGISTRY_CATALOG",
     "RG_REGISTRY_USER",
     "RG_REGISTRY_PASSWORD",
