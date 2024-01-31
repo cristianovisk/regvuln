@@ -31,8 +31,9 @@ from mgn_database import insertNewHashFileToCompare
 from mgn_database import checkHashFileToCompare
 from defectdojo_integration import populate_database_defectdojo
 from defectdojo_integration import sendReportDefectDojo
+from urllib3.exceptions import InsecureRequestWarning
 
-
+requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 def generate_config():
     src = '.config_model.ini'
