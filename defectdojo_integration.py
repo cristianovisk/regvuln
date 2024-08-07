@@ -118,20 +118,20 @@ def gen_new_engagement(sha256, name, reg_name, idprod):
     data_eng['name'] = name
     data_eng['description'] = name
     data_eng['product'] = idprod
-    data_eng['target_start'] = str(date.today())
-    data_eng['target_end'] = str(date.today())
     data_eng['engagement_type'] = 'CI/CD'
     data_eng['commit_hash'] = sha256
     data_eng['deduplication_on_engagement'] = True
     data_eng['status'] = "Completed"
 
-    json_eng = json.dumps(data_eng, indent = 3)
     check_exist = request_api('engagements/', "GET", json_eng)
     for num in range(0,len(check_exist['results'])):
         if check_exist['results'][num]['name'] == name:
             flag = True
 
     if flag != True:
+        data_eng['target_start'] = str(date.today())
+        data_eng['target_end'] = str(date.today())
+        json_eng = json.dumps(data_eng, indent = 3)
         logging.warning("REGVULN - Nao encontrado Engagement, cadastrando. (%s)" %name)
         eng_req = request_api('engagements/', "POST", json_eng)
         insertNewEngagement(eng_req['id'], eng_req['name'])
