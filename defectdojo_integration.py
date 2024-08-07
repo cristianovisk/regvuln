@@ -122,7 +122,7 @@ def gen_new_engagement(sha256, name, reg_name, idprod):
     data_eng['commit_hash'] = sha256
     data_eng['deduplication_on_engagement'] = True
     data_eng['status'] = "Completed"
-
+    json_eng = json.dumps(data_eng, indent = 3)
     check_exist = request_api('engagements/', "GET", json_eng)
     for num in range(0,len(check_exist['results'])):
         if check_exist['results'][num]['name'] == name:
